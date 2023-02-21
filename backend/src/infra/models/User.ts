@@ -2,19 +2,10 @@ import { uuid } from "uuidv4";
 
 export class User {
   public id: string;
-  public name: string;
-  public email: string;
-  public photo: string;
-  public accessToken: string;
-  public idToken: string;
-  public createdAt: Date;
-  public status: number;
+  public name: string | undefined;
+  public email: string | undefined;
 
-  constructor(props: Omit<User, 'id'>, id?: string) {
-    Object.assign(this, props);
-    
-    if (!id) {
-      this.id = uuid();
-    }
+  constructor() {
+    this.id = uuid();
   }
 }

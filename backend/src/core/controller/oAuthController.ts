@@ -1,5 +1,6 @@
-import { GoogleAuth } from '@infra/services/contracts/googleAuthService';
+import { GoogleAuth } from '@infra/services/GoogleAuthService';
 import { Router, Request, Response } from 'express';
+import { Token } from '@infra/auth/tokenGenerated';
 
 export class OAuthController {
   public router: Router = Router(); 
@@ -11,12 +12,11 @@ export class OAuthController {
   private googleOAuth = async (req: Request, res: Response): Promise<Response> => {
     const { credential } = req.body;
 
-    const google = new GoogleAuth();
+    const googleInfo = await new GoogleAuth().getTokenInfos(credential);
+    console.log(googleInfo);
 
-    const info = google.getTokenInfos(credential);
+    const token = new Token().GenerateToken();
 
-    //console.log(info);
-
-    return res.status(201).json({});
+    return res.status(201).json({ token });
   }
 }
