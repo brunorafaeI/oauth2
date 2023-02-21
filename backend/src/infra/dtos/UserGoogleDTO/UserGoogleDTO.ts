@@ -1,5 +1,5 @@
 export class UserGoogleDTO {
-  public id: string;
-  public name: string;
-  public email: string;
+  public id: string | undefined;
+  public name: string | undefined;
+  public email: string | undefined;
 }

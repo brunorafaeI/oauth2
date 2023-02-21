@@ -12,10 +12,7 @@ export default function AuthMiddleware(
   const { authorization } = req.headers;
   if (!authorization) return res.sendStatus(401);
 
-  const token = authorization
-    .replace(tokenGenerated.GenerateToken(), "")
-    .trim();
-
+  const token = authorization.split(` `)[1];
   try {
     const tokenVerify = tokenGenerated.VerifyToken(token);
     console.log(tokenVerify);

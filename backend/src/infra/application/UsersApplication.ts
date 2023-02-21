@@ -1,12 +1,12 @@
 import { User } from "@infra/models/User";
 import { IUsersApplication } from "./contracts/IUsersApplication";
-import { TokenPayload } from "google-auth-library";
+import { UserGoogleDTO } from "@infra/dtos/UserGoogleDTO/UserGoogleDTO";
 
 export class UsersApplication implements IUsersApplication {
   getAllUsers(): Promise<User[]> {
     throw new Error("Method not implemented.");
   }
-  
+
   getUserById(): Promise<User> {
     throw new Error("Method not implemented.");
   }
@@ -15,10 +15,10 @@ export class UsersApplication implements IUsersApplication {
     return new User();
   }
 
-  async setUser(userPayload: TokenPayload): Promise<User> {
+  async setUser(userDto: UserGoogleDTO): Promise<User> {
     const user = new User();
-    user.name = userPayload.name;
-    user.email = userPayload.email;
+    user.name = userDto.name;
+    user.email = userDto.email;
     return user;
   }
 }
