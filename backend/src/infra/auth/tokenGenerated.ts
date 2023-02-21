@@ -1,3 +1,4 @@
+import { User } from "@infra/models/User";
 import "dotenv/config";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
@@ -5,14 +6,14 @@ export class Token {
   private _secretKey: string;
   private _expiresToken: string;
 
-  public GenerateToken(): string {
+  public GenerateToken(user: User): string {
     this._secretKey = String(process.env.JWT_KEY);
     this._expiresToken = String(process.env.JWT_EXPIRES_TIME);
 
     const tokenDescription = jwt.sign(
       {
-        userId: 1,
-        userName: "User",
+        userName: user.name,
+        userEmail: user.email,
       },
       this._secretKey,
       {
@@ -23,7 +24,7 @@ export class Token {
     return tokenDescription;
   }
 
-  public VerifyToken(tokenGenerated: string): JwtPayload | string{
+  public VerifyToken(tokenGenerated: string): JwtPayload | string {
     this._secretKey = String(process.env.JWT_KEY);
     const tokenVerify = jwt.verify(tokenGenerated, this._secretKey);
     return tokenVerify;
