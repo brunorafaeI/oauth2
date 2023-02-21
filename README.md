@@ -8,3 +8,9 @@
 ```sh
 docker-composer up -d --build
 ```
+
+**UP SERVER MANUAL**
+```js
+  cd backend && npm run dev:server
+  cd frontend && npm run dev
+```
