@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import Api from "./http/api";
 
 function App() {
-  const [credentail, setCredential] = useState('')
+  const [credential, setCredential] = useState('')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   
   const googleLogin = useGoogleLogin({
@@ -22,13 +22,13 @@ function App() {
   })
 
   const getAccessToken = useCallback( async () => {
-    const { status, data } = await Api.post('/auth/google', { credentail })
+    const { status, data } = await Api.post('/auth/google', { credential })
 
     if (status === 200) {
       console.log(data)
     }
     
-  }, [credentail])
+  }, [credential])
 
   const SignOut = useCallback(() => {
     console.log('Sign Out')
