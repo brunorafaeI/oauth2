@@ -1,7 +1,5 @@
 ## Docker files settings
-docker/mongodb/data/db/
-!docker/mongodb/data/db/.gitkeep
-docker/mssql/output/
+docker/data/db/
 
 ## Vscode IDE settings
 .vscode/

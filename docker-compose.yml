@@ -8,7 +8,7 @@ services:
     volumes:
         - ./backend:/app
     networks:
-        - backend
+        - oauth
     command: sh -c "yarn && yarn dev"
 
   backend:
@@ -23,24 +23,26 @@ services:
         - ./backend:/app
         - ./docker/tmp/logs/:/usr/src/app/error.log
     networks:
-        - backend
+        - oauth
     command: ["pm2-runtime", "process.json"]
 
   frontend:
     build: ./
     container_name: oauth_frontend
+    volumes:
+        - ./frontend:/app
     ports:
       - 3000:3333
     networks:
-      - oauth2
-    command: ["pm2-runtime", "process.json"]
+      - oauth
+    command: ["yarn", "dev"]
 
   postgres:
     image: postgres
     container_name: oauth_pgsql
     restart: always
     volumes:
-      - ./docker/db/PGSQL/data:/var/lib/postgresql/data:rw
+      - ./docker/db/data:/var/lib/postgresql/data:rw
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_USERNAME=postgres
