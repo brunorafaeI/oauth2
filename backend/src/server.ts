@@ -1,8 +1,4 @@
-import 'dotenv'
-
-import express from 'express'
-
-const app = express()
+import app from "app"
 
 const APP_PORT = Number(process.env.APP_PORT) || 5000
 
