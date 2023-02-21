@@ -1,5 +1,5 @@
 ## Docker files settings
-docker/data/db/
+docker/db/
 
 ## Vscode IDE settings
 .vscode/
@@ -15,14 +15,6 @@ backend/build/
 
 ## Env
 .env
-backend/.env
-
-## Folder to upload images
-backend/tmp/*
-!backend/tmp/.gitkeep
-
-## Yarn lock
-yarn-error.log
 
 ## PM2
 process.json
