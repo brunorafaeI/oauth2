@@ -1,33 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useGoogleLogin } from "@react-oauth/google";
+import { useCallback, useEffect, useState } from "react";
+import Api from "./http/api";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [credentail, setCredential] = useState('')
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: response => {
+      const { code } = response
+
+      if (code) {
+        setCredential(code)
+        setIsLoggedIn(true)
+      }
+    },
+    onError: () => {
+      console.log('Login Failed');
+    },
+  })
+
+  const getAccessToken = useCallback( async () => {
+    const { status, data } = await Api.post('/auth/google', { credentail })
+
+    if (status === 200) {
+      console.log(data)
+    }
+    
+  }, [credentail])
+
+  const SignOut = useCallback(() => {
+    console.log('Sign Out')
+  }, [])
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getAccessToken()
+    }
+  }, [isLoggedIn])
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <button
+      onClick={() => isLoggedIn ? SignOut() : googleLogin()}
+    >
+      { isLoggedIn ? ("Sign out") : ("Sign in with Google")}
+    </button>
   )
 }
 
