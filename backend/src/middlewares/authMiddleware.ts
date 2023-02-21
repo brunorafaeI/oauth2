@@ -1,16 +1,16 @@
 import "dotenv/config";
 import { Request, Response, NextFunction } from "express";
-import { TokenGenerated } from "@infra/auth/tokenGenerated";
+import { Token } from "@infra/auth/tokenGenerated";
 
 export default function AuthMiddleware(
   req: Request,
   res: Response,
   next: NextFunction,
 ) {
-  const tokenGenerated = new TokenGenerated();
+  const tokenGenerated = new Token();
 
   const { authorization } = req.headers;
-  if (!authorization) return res.sendStatus(403);
+  if (!authorization) return res.sendStatus(401);
 
   const token = authorization
     .replace(tokenGenerated.GenerateToken(), "")
@@ -21,6 +21,6 @@ export default function AuthMiddleware(
     console.log(tokenVerify);
     return next();
   } catch {
-    return res.sendStatus(403);
+    return res.sendStatus(401);
   }
 }

@@ -1,7 +1,7 @@
 import "dotenv/config";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
-export class TokenGenerated {
+export class Token {
   private _secretKey: string;
   private _expiresToken: string;
 
