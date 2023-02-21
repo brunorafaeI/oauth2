@@ -22,8 +22,8 @@ export class OAuthController {
   }
 
   private googleOAuth = async (req: Request, res: Response): Promise<Response> => {
-
-
+    const { credential } = req.body;
+    console.log(req.body);
 
     return res.status(201).json({});
   }
