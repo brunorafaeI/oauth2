@@ -22,8 +22,10 @@ export class GoogleAuth {
 
   public getTokenInfos = async (code: string): Promise<User> => {
     const tokenInfo = await this._google.getToken(code);
-    const access_token: string = tokenInfo.tokens.access_token ?? '';
-    const id_token: string = tokenInfo.tokens.id_token ?? ''
+    const access_token: string = String(tokenInfo.tokens.access_token);
+    const id_token: string = String(tokenInfo.tokens.id_token);
+
+    if (id_token == null) return new User();
 
     const ticket = await this._google.verifyIdToken({
       idToken: id_token,
