@@ -1,17 +1,17 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
+import 'dotenv/config'
 
 export default {
-  SESSION_SECRET: process.env.SESSION_SECRET ?? '',
-  APP_SECRET: process.env.APP_SECRET ?? '',
-  APP_PORT: process.env.APP_PORT ?? '',
-  NODE_ENV: process.env.NODE_ENV ?? '',
-  CLIENT_ID: process.env.CLIENT_ID ?? '',
-  CLIENT_SECRET: process.env.CLIENT_SECRET ?? '',
-  REDIRECT_URI: process.env.REDIRECT_URI ?? '',
-  DB_HOST: process.env.DB_HOST ?? '',
-  DB_PORT: process.env.DB_PORT ?? '',
-  DB_USERNAME: process.env.DB_USERNAME ?? '',
-  DB_PASSWORD: process.env.DB_PASSWORD ?? '',
-  DB_DATABASE: process.env.DB_DATABASE ?? ''
+  google: {
+    clientId: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
+    redirectURI: process.env.REDIRECT_URI
+  },
+  pgsql: {
+    host: process.env.DB_HOST || 'localhost',
+    port: Number(process.env._DB_PORT) || 5432,
+    username: process.env.DB_USERNAME || 'postgres',
+    password: process.env.DB_PASSWORD || 'postgres',
+    database: process.env.DB_DATABASE || 'postgres',
+    db_url: process.env.DB_URL
+  }
 }

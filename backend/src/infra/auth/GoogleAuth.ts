@@ -1,38 +1,42 @@
-import { OAuth2Client, TokenPayload } from "google-auth-library";
-import env from "config/env";
-import { AuthMessage } from "@core/common/util/messages/auth.util";
-import { UserGoogleDTO } from "@infra/dtos/UserGoogleDTO/UserGoogleDTO";
+import { OAuth2Client, TokenPayload } from "google-auth-library"
+
+import { AuthMessage } from "@core/common/util/messages/auth.util"
+import { UserGoogleDTO } from "@infra/dtos/UserGoogleDTO/UserGoogleDTO"
+import env from "config/env"
 
 export class GoogleAuth {
-  private _google: OAuth2Client;
-  private _userTokenPayload: TokenPayload | undefined;
+  private readonly _google: OAuth2Client;
+  private  _userTokenPayload: TokenPayload | undefined;
 
-  constructor() {
+  constructor() {    
     this._google = new OAuth2Client(
-      env.CLIENT_ID,
-      env.CLIENT_SECRET,
-      env.REDIRECT_URI,
-    );
+      env.google.clientId,
+      env.google.clientSecret,
+      env.google.redirectURI,
+    )
   }
 
   public getTokenInfos = async (code: string): Promise<UserGoogleDTO> => {
-    const tokenInfo = await this._google.getToken(code);
-    const access_token: string = String(tokenInfo.tokens.access_token);
-    const id_token: string = String(tokenInfo.tokens.id_token);
+    const { tokens } = await this._google.getToken(code)
+    const { id_token } = tokens
 
-    if (!id_token) throw new Error(String(AuthMessage.message02EX01));
+    if (!id_token) {
+      throw new Error(AuthMessage.message02EX01())
+    }
 
     const ticket = await this._google.verifyIdToken({
       idToken: id_token,
-      audience: env.CLIENT_ID,
-    });
+      audience: env.google.clientId,
+    })
 
-    this._userTokenPayload = ticket.getPayload();
-    if (!this._userTokenPayload) return new UserGoogleDTO();
+    this._userTokenPayload = ticket.getPayload()
+    if (!this._userTokenPayload || !this._userTokenPayload.email) {
+      throw new Error("Unauthorized user token.")
+    }
 
-    let userDto = new UserGoogleDTO();
-    userDto.email = this._userTokenPayload.email;
-    userDto.name = this._userTokenPayload.name;
-    return userDto;
-  };
+    return new UserGoogleDTO({
+      name: this._userTokenPayload.name,
+      email: this._userTokenPayload.email,
+    })
+  }
 }

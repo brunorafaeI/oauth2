@@ -1,20 +1,22 @@
-import { DataSource } from "typeorm";
-import { DatabaseMessage } from "@core/common/util/messages/database.util";
+import { DataSource } from "typeorm"
+import { DatabaseMessage } from "@core/common/util/messages/database.util"
+import env from '../../config/env'
 
 export const DataContext = new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT) || 5432,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  ...env.pgsql,
   entities: [],
-});
+})
 
-DataContext.initialize()
-  .then(() => {
-    console.log("Connection successfully established");
-  })
-  .catch(ex => {
-    console.log(`${DatabaseMessage.message01EX01(ex)}`);
-  });
+export const getManager = async () => {
+  try {
+    const connectDB = await DataContext.initialize()
+
+    if (connectDB) {
+      console.log("Connection sucessfully established")
+      return connectDB
+    }
+  } catch (err) {
+    console.log(`${DatabaseMessage.message01EX01(err)}`)
+  }
+}
