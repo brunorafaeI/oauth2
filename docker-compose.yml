@@ -32,7 +32,7 @@ services:
     volumes:
         - ./frontend:/app
     ports:
-      - 3000:3333
+      - 3344:3333
     networks:
       - oauth
     command: ["npm","run","dev"]
@@ -42,15 +42,18 @@ services:
     container_name: oauth_pgsql
     restart: always
     volumes:
-      - ./docker/db/postgres_data:/var/lib/postgresql/data:rw
+      - postgres_data:/var/lib/postgresql/data:rw
     environment:
+      - POSTGRES_USER=oauth
       - POSTGRES_PASSWORD=oauth
-      - POSTGRES_USERNAME=oauth
       - POSTGRES_DB=oauth
     ports:
       - 5432:5432
     networks:
       - oauth
+
+volumes:
+  postgres_data:
 
 networks:
   oauth:
