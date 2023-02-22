@@ -1,5 +1,5 @@
 ## Docker files settings
-docker/db/
+docker/db/postgres_data/
 
 ## Vscode IDE settings
 .vscode/
