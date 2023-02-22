@@ -35,7 +35,7 @@ services:
       - 3000:3333
     networks:
       - oauth
-    command: ["npm","run","dev"]
+    command: sh -c "npm i && npm run dev"
 
   postgres:
     image: postgres
