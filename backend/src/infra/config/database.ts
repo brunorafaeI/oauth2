@@ -1,23 +1,31 @@
+import "dotenv/config"
+import "reflect-metadata"
 import path from "node:path"
 import { DataSource } from "typeorm"
 
 import env from "@infra/config/env"
 import { AppError } from "@infra/config/error"
 
-export const DataContext = new DataSource({
+const IS_NOT_PROD = process.env.NODE_ENV !== "production"
+
+export const dataSource = new DataSource({
   type: "postgres",
   ...env.pgsql,
-  entities: [path.resolve(__dirname, "database","models", "**", "*.js")],
-  migrations: [path.resolve(__dirname, "migration", "**", "*.js")]
+  entities: [path.resolve(__dirname, "..", "database", "models", "**", "*.js")],
+  migrations: [path.resolve(__dirname, "..", "database", "migrations", "**", "*.js")],
+  synchronize: IS_NOT_PROD,
+  logging: IS_NOT_PROD,
+  migrationsRun: IS_NOT_PROD,
+  maxQueryExecutionTime: 3000,
 })
 
 export const connectDB = async () => {
   try {
-    const dataSource = await DataContext.initialize()
+    const connector = await dataSource.initialize()
 
-    if (dataSource) {
+    if (connector) {
       console.log("Connection database sucessfully established")
-      return dataSource
+      return connector
     }
   } catch (err: any) {
     throw new AppError(err.message, 500)

@@ -29,11 +29,9 @@ export class OAuthController extends Controller {
     try {
       const userInfo = await this._oAuth2ClientService.getTokenInfos(credential)
       const jwtToken = this._jwtTokenService.generateToken(userInfo)
-
-      // const userSaved = await this._userService.save(userInfo)
-      // TODO : persist user info with token on bdd
+      const userSaved = await this._userService.save({ ...userInfo, token: jwtToken })
       
-      return res.status(201).json({ userInfo, token: jwtToken })
+      return res.status(201).json({ userInfo: userSaved })
     } catch (err: any) {
       AppThrowException(err, res)
     } 
