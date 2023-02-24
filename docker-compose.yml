@@ -42,15 +42,18 @@ services:
     container_name: oauth_pgsql
     restart: always
     volumes:
-      - ./docker/db/postgres_data:/var/lib/postgresql/data:rw
+      - oauth_data:/var/lib/postgresql/data:rw
     environment:
       - POSTGRES_PASSWORD=oauth
-      - POSTGRES_USERNAME=oauth
+      - POSTGRES_USER=oauth
       - POSTGRES_DB=oauth
     ports:
       - 5432:5432
     networks:
       - oauth
+
+volumes:
+  oauth_data:
 
 networks:
   oauth:

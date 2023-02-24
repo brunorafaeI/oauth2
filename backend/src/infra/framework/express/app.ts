@@ -1,4 +1,5 @@
-import 'dotenv/config'
+import "dotenv/config"
+import "@infra/config/database"
 
 import express from "express"
 import cors from "cors"

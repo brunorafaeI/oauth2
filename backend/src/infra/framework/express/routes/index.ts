@@ -1,8 +1,8 @@
-import { OAuthController } from './../../../../app/controller/OAuthController';
+import { OAuthController } from '@app/controller/OAuthController'
 import { Router } from "express"
 
 const router = Router()
 
-router.use("/", new OAuthController().getRoutes())
+router.use("/auth", new OAuthController().router)
 
 export default router
