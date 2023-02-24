@@ -1,4 +1,4 @@
-import app from "./config/app"
+import app from "@infra/framework/express/app"
 
 const APP_PORT = Number(process.env.APP_PORT) || 5000
 

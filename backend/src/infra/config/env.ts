@@ -1,10 +1,9 @@
-import 'dotenv/config'
 
 export default {
   google: {
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    redirectURI: process.env.REDIRECT_URI
+    clientId: String(process.env.CLIENT_ID),
+    clientSecret: String(process.env.CLIENT_SECRET),
+    redirectURI: String(process.env.REDIRECT_URI)
   },
   pgsql: {
     host: process.env.DB_HOST || 'localhost',
@@ -12,6 +11,6 @@ export default {
     username: process.env.DB_USERNAME || 'postgres',
     password: process.env.DB_PASSWORD || 'postgres',
     database: process.env.DB_DATABASE || 'postgres',
-    db_url: process.env.DB_URL
+    db_url: String(process.env.DB_URL)
   }
 }

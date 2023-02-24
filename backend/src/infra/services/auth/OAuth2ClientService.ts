@@ -1,10 +1,10 @@
+import { AppError } from '@infra/config/error';
 import { OAuth2Client, TokenPayload } from "google-auth-library"
 
-import { AuthMessage } from "@core/common/util/messages/auth.util"
-import { UserGoogleDTO } from "@infra/dtos/UserGoogleDTO/UserGoogleDTO"
-import env from "config/env"
+import { UserDTO } from "@infra/database/models/user/dtos/UserDTO"
+import env from "@infra/config/env"
 
-export class GoogleAuth {
+export class OAuth2ClientService {
   private readonly _google: OAuth2Client;
   private  _userTokenPayload: TokenPayload | undefined;
 
@@ -16,12 +16,12 @@ export class GoogleAuth {
     )
   }
 
-  public getTokenInfos = async (code: string): Promise<UserGoogleDTO> => {
+  public getTokenInfos = async (code: string): Promise<UserDTO> => {
     const { tokens } = await this._google.getToken(code)
     const { id_token } = tokens
 
     if (!id_token) {
-      throw new Error(AuthMessage.message02EX01())
+      throw new AppError("Unauthorized access" , 401)
     }
 
     const ticket = await this._google.verifyIdToken({
@@ -31,12 +31,13 @@ export class GoogleAuth {
 
     this._userTokenPayload = ticket.getPayload()
     if (!this._userTokenPayload || !this._userTokenPayload.email) {
-      throw new Error("Unauthorized user token.")
+      throw new AppError("Unauthorized user token.", 401)
     }
 
-    return new UserGoogleDTO({
+    return new UserDTO({
       name: this._userTokenPayload.name,
       email: this._userTokenPayload.email,
+      picture: this._userTokenPayload.picture
     })
   }
 }

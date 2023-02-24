@@ -1,4 +1,3 @@
-import { NextFunction } from 'express';
 import { Response } from 'express'
 
  export class AppError extends Error {
@@ -12,10 +11,8 @@ import { Response } from 'express'
 }
 
 export const AppThrowException = (
-  err: Error, 
-  req: Request, 
-  res: Response, 
-  _: NextFunction
+  err: Error,
+  res: Response,
 ) => {
   
   if (err instanceof AppError) {
