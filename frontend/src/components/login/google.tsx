@@ -1,12 +1,12 @@
 import { useGoogleLogin } from "@react-oauth/google"
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "../../hooks/auth-store"
 
-export default function SignIn() {
+export function GoogleLogin() {
   const [credential, setCredential] = useState('')
   const { isLoggedIn, getAccessToken, SignOut } = useAuth()
 
-  const googleLogin = useGoogleLogin({
+  const SignInGoogle = useGoogleLogin({
     flow: 'auth-code',
     onSuccess: response => {
       const { code } = response
@@ -23,13 +23,16 @@ export default function SignIn() {
       getAccessToken(credential)
     }
   }, [credential])
-
+  
   return (
-    <button
-      onClick={() => isLoggedIn ? SignOut() : googleLogin()}
-    >
-      { isLoggedIn ? ("Sign out") : ("Sign in with Google")}
-    </button>
+    <>
+      <div data-theme="halloween">
+        <button className="btn btn-secondary"
+          onClick={() => isLoggedIn ? SignOut() : SignInGoogle()}
+        >
+          { isLoggedIn ? ("Sign out") : ("Sign in with Google")}
+        </button>
+      </div>
+    </>
   )
 }
-
