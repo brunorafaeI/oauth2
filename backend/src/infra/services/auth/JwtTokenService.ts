@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken"
 
-import { UserDTO } from "@infra/database/typeorm/models/user/dtos/UserDTO"
+import { UserDTO } from "@infra/database/dtos/UserDTO"
 
 export class JwtTokenService {
   private _secretKey: string
