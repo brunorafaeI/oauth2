@@ -1,7 +1,7 @@
 import { OAuth2Client, TokenPayload } from "google-auth-library"
 
 import { AppError } from '@infra/config/error'
-import { UserDTO } from "@infra/database/models/user/dtos/UserDTO"
+import { UserDTO } from "@infra/database/typeorm/models/user/dtos/UserDTO"
 import env from "@infra/config/env"
 
 export class OAuth2ClientService {

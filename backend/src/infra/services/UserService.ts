@@ -1,7 +1,7 @@
 import { FindManyOptions, Repository } from 'typeorm'
 
-import { UserDTO } from '@infra/database/models/user/dtos/UserDTO'
-import { UserEntity } from '@infra/database/models/user/UserEntity'
+import { UserDTO } from '@infra/database/typeorm/models/user/dtos/UserDTO'
+import { UserEntity } from '@infra/database/typeorm/models/user/UserEntity'
 import { IRepositoryService } from '@infra/services/contracts/IRepositoryService'
 import { dataSource } from '@infra/config/database'
 
