@@ -4,10 +4,10 @@ import Login from "./pages/login";
 
 export function App() {
   return(
-    <html data-theme="dark">
+    <div data-theme="dark">
       <NavBar />
       <Login />
       <Footer />
-    </html>
+    </div>
   )
 }
