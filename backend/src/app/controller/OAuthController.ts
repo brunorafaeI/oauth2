@@ -8,6 +8,11 @@ import { AppThrowException } from "@infra/config/error"
 import { Controller } from "@app/controller/Controller"
 import { Users } from "@prisma/client"
 
+interface OAuthRequestBody extends Request {
+  body: {
+    credential: string
+  }
+}
 export class OAuthController extends Controller {
   private readonly _oAuth2ClientService: OAuth2ClientService
   private readonly _jwtTokenService: JwtTokenService
@@ -23,7 +28,7 @@ export class OAuthController extends Controller {
   }
 
   private OAuthGoogle = async (
-    req: Request,
+    req: Request<OAuthRequestBody>,
     res: Response,
   ): Promise<Response|void> => {
     const { credential } = req.body
