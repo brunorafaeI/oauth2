@@ -1,9 +1,9 @@
-import { IRepositoryService } from '@infra/services/contracts/IRepositoryService'
+import { IRepositoryService } from '@app/services/contracts/IRepositoryService'
 import { prisma } from '@infra/database/prisma'
 import { Prisma, Users } from '@prisma/client'
 import { UserDTO } from '@infra/database/dtos/UserDTO'
 
-export class UserService implements IRepositoryService<Users> {
+export class UserPrismaService implements IRepositoryService<Users> {
   private _userRepository: Prisma.UsersDelegate<false>
 
   constructor() {

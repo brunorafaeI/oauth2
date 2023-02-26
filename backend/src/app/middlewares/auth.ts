@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express"
 
 import { AppError } from '@infra/config/error'
-import { JwtTokenService } from '@infra/services/auth/JwtTokenService'
+import { JwtTokenService } from '@app/services/auth/JwtTokenService'
 
 const jwtTokenService = new JwtTokenService()
 

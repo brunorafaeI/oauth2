@@ -1,20 +1,22 @@
 import { Request, Response } from "express"
 
-import { JwtTokenService } from '@infra/services/auth/JwtTokenService'
-import { OAuth2ClientService } from '@infra/services/auth/OAuth2ClientService'
-import { UserService } from '@infra/services/UserService'
+import { IRepositoryService } from '@app/services/contracts/IRepositoryService'
+import { JwtTokenService } from '@app/services/auth/JwtTokenService'
+import { OAuth2ClientService } from '@app/services/auth/OAuth2ClientService'
+import { UserPrismaService } from '@app/services/UserPrismaService'
 import { AppThrowException } from "@infra/config/error"
 import { Controller } from "@app/controller/Controller"
+import { Users } from "@prisma/client"
 
 export class OAuthController extends Controller {
   private readonly _oAuth2ClientService: OAuth2ClientService
   private readonly _jwtTokenService: JwtTokenService
-  private readonly _userService: UserService
+  private readonly _userService: IRepositoryService<Users>
 
   constructor() {
     super()
     this._oAuth2ClientService = new OAuth2ClientService()
-    this._userService = new UserService()
+    this._userService = new UserPrismaService()
     this._jwtTokenService = new JwtTokenService()
     
     this.router.post("/google", this.OAuthGoogle)
