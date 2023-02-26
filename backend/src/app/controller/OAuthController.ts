@@ -22,7 +22,7 @@ export class OAuthController extends Controller {
     super()
     this._oAuth2ClientService = new OAuth2ClientService()
     this._userService = new UserPrismaService()
-    this._jwtTokenService = new JwtTokenService()
+    this._jwtTokenService = new JwtTokenService() 
     
     this.router.post("/google", this.OAuthGoogle)
   }

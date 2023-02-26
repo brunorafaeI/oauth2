@@ -10,6 +10,7 @@ export interface UserInfo {
 }
 
 type UseAuthType = {
+  isLoading: boolean
   isLoggedIn: boolean
   userInfo: UserInfo
   SignOut: () => void
@@ -20,17 +21,21 @@ export const useAuth = create<UseAuthType>()(
   devtools(
     persist(
       (set) => ({
+        isLoading: false,
         isLoggedIn: false,
         userInfo: {} as UserInfo,
         SignOut: () => set(() => ({ isLoggedIn: false, userInfo: {} as UserInfo })),
         getAccessToken: async (credential) => {
+          set(() => ({ isLoading: true }))
           const { status, data } = await Api.post('/auth/google', { credential })
 
           if (status === 201) {
             const { accessToken, userInfo } = data
-            set(() => ({ isLoggedIn: true,  userInfo: { ...userInfo, token: accessToken } }))
-
-            console.log(data)
+            set(() => ({ 
+              isLoading: false, 
+              isLoggedIn: true,  
+              userInfo: { ...userInfo, token: accessToken } 
+            }))
           }
         }
       }),
