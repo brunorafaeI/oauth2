@@ -1,7 +1,7 @@
 import { useGoogleLogin } from "@react-oauth/google"
 import { useAuth } from "../../hooks/auth"
 
-export function SignInGoogle() {
+export function SignInFacebook() {
   const { isLoading, isLoggedIn, getAccessToken, SignOut } = useAuth()
 
   const SignInWithGoogle = useGoogleLogin({
@@ -21,7 +21,7 @@ export function SignInGoogle() {
       <button className={`btn btn-primary ${(isLoading ? " loading" : "")}`}
         onClick={() => isLoggedIn ? SignOut() : SignInWithGoogle()}
       >
-        { isLoggedIn ? ("Sign out") : ("Google")}
+        { isLoggedIn ? ("Sign out") : ("Facebook")}
       </button>
     </>
   )

@@ -13,6 +13,16 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light", "dark", "halloween", "winter", "fantasy"]
+    themes: ["light", "dark", "halloween", "winter", "fantasy",
+    {
+      dark: {
+        ...require("daisyui/src/colors/themes")["[data-theme=dark]"],
+        secondary: "#FA9928"
+        // secondary: "#75DB48"
+      }
+    }
+  
+    ],
+    
   }
 }

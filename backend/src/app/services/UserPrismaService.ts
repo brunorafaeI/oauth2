@@ -23,7 +23,7 @@ export class UserPrismaService implements IRepositoryService<Users> {
   async find(criteria: any): Promise<Users[] | null> {
     return await this._userRepository.findMany({
       where: criteria
-    });
+    })
   }
 
   async save(user: UserDTO): Promise<Users | void> {
