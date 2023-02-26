@@ -44,7 +44,7 @@ export class UserService implements IRepositoryService<Users> {
       data: {
         name: user.name,
         email: user.email,
-        token: String(user.token),
+        token: user.token!,
         picture: user.picture,
       }
     })
