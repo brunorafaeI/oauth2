@@ -1,38 +1,52 @@
-import { FindManyOptions, Repository } from 'typeorm'
-
-import { UserDTO } from '@infra/database/dtos/UserDTO'
-import { UserEntity } from '@infra/database/typeorm/models/user/UserEntity'
 import { IRepositoryService } from '@infra/services/contracts/IRepositoryService'
-import { dataSource } from '@infra/config/database'
+import { prisma } from '@infra/database/prisma'
+import { Prisma, Users } from '@prisma/client'
+import { UserDTO } from '@infra/database/dtos/UserDTO'
 
-export class UserService implements IRepositoryService<UserEntity> {
-  private _userRepository: Repository<UserEntity>
+export class UserService implements IRepositoryService<Users> {
+  private _userRepository: Prisma.UsersDelegate<false>
 
   constructor() {
-    this._userRepository = dataSource.getRepository(UserEntity)
+    this._userRepository = prisma.users
   }
 
-  async findAll(): Promise<UserEntity[]> {
-    return await this._userRepository.find()
-  }
-  
-  async findById(id: string): Promise<UserEntity|null> {
-    return await this._userRepository.findOneBy({ id })
+  async findAll(): Promise<Users[]> {
+    return await this._userRepository.findMany()
   }
 
-  async find(criteria: FindManyOptions): Promise<UserEntity[]> {
-    return await this._userRepository.find(criteria)
+  async findById(id: string): Promise<Users | null> {
+    return await this._userRepository.findUnique({
+      where: { id }
+    })
   }
 
-  async save(data: UserDTO): Promise<UserEntity|void> {
-    const userFind = await this._userRepository.findOneBy({ email: data.email })
+  async find(criteria: any): Promise<Users[] | null> {
+    return await this._userRepository.findMany({
+      where: criteria
+    });
+  }
+
+  async save(user: UserDTO): Promise<Users | void> {
+    const userFind = await this._userRepository.findFirst({
+      where: { email: user.email }
+    })
 
     if (userFind) {
-      userFind.updatedAt = new Date()
-      return await this._userRepository.save(userFind)
+      return await this._userRepository.update({
+        where: {
+          email: user.email
+        },
+        data: user
+      })
     }
 
-    return await this._userRepository.save(data)
+    return await this._userRepository.create({
+      data: {
+        name: user.name,
+        email: user.email,
+        token: String(user.token),
+        picture: user.picture,
+      }
+    })
   }
-
 }

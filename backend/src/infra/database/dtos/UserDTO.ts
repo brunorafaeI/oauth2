@@ -7,11 +7,11 @@ type UserDTOType = {
 }
 
 export class UserDTO {
-  id?: string
-  name?: string
+  id?: string;
+  name?: string;
   email: string
-  picture?: string
-  token?: string
+  picture?: string;
+  token?: string;
 
   constructor({
     id,
