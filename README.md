@@ -17,7 +17,7 @@ docker-compose up -d --build
 ```
 
 ### Manually
-```js
+```sh
   cd backend && npm run dev:server
   cd frontend && npm run dev:server
 ```
@@ -32,3 +32,12 @@ to up again the containers *(not necessary to rebuild)*
 `
 docker-compose up -d
 `
+
+### (Prisma)
+to update migration via docker container with the following commands : 
+```sh
+docker exec -it oauth_backend sh # (to go inside docker container)
+npx prisma migrate reset # to reset migration
+npx prisma db push # to push migration
+npx prisma generate # to update prisma client configuration
+```
