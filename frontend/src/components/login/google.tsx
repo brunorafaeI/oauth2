@@ -2,6 +2,7 @@ import { useState } from "react"
 
 import { useGoogleLogin } from "@react-oauth/google"
 import { useAuth } from "../../hooks/auth"
+import IconGoogle from '../../../public/icons/google.svg'
 
 export function SignInGoogle() {
   const [isClicked, setIsClicked] = useState(false)
@@ -21,13 +22,13 @@ export function SignInGoogle() {
   
   return (
     <>
-      <button className={`btn btn-primary ${(isLoading && isClicked ? " loading" : "")}`}
+      <button className={`btn btn-primary btn-outline border-0 lowercase ${(isLoading && isClicked ? " loading" : "")}`}
         onClick={() => {
           SignInWithGoogle()
           setIsClicked(true)
         }}
       >
-        Google
+        <img src={IconGoogle} alt="Icon Google" className="h-[2.2rem]" />oogle
       </button>
     </>
   )

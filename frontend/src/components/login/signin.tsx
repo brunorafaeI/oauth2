@@ -21,7 +21,7 @@ export function Signin() {
 
       if (name.value && email.value) {
         const credential = { name: name.value, email: email.value }
-        
+
         getAccessToken(
           credential,
           'login'

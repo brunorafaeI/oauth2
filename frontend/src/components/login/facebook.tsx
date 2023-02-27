@@ -1,5 +1,6 @@
 import { useState } from "react"
 
+import IconFacebook from '../../../public/icons/facebook.svg'
 import { useAuth } from "../../hooks/auth"
 
 export function SignInFacebook() {
@@ -8,13 +9,13 @@ export function SignInFacebook() {
   
   return (
     <>
-      <button className={`btn btn-primary ${(isLoading && isClicked ? " loading" : "")}`}
+      <button className={`btn btn-primary btn-outline border-0 lowercase ${(isLoading && isClicked ? " loading" : "")}`}
         onClick={() => {
           alert("Facebook login")
           setIsClicked(true)
         }}
       >
-        Facebook
+      <img src={IconFacebook} alt="Icon Facebook" className="h-[2.4rem]" />acebook
       </button>
     </>
   )
