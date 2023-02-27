@@ -8,10 +8,10 @@ docker/db/
 .idea/
 
 ## Node's dependences
-backend/node_modules/
+node_modules/
 
 ## Build files
-backend/build/
+build/
 
 ## Env
 .env
