@@ -2,7 +2,7 @@ import { Signin } from "./signin";
 import { SignInGoogle } from "./google";
 import { SignInFacebook } from "./facebook";
 
-export function NetworkButton() {
+export function Login() {
   return (
     <div className="card w-5/10 bg-base-100 flex items-center shadow-2xl m-10">
       

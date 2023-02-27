@@ -5,8 +5,8 @@ import Api from '../http/api'
 export interface UserInfo {
   name: string
   email: string
-  picture: string
-  token: string
+  picture?: string
+  token?: string
 }
 
 type UseAuthType = {
@@ -14,7 +14,10 @@ type UseAuthType = {
   isLoggedIn: boolean
   userInfo: UserInfo
   SignOut: () => void
-  getAccessToken: (credential: string) => Promise<void>
+  getAccessToken: (
+    credential: string | Omit<UserInfo, 'token' | 'picture'>, 
+    type: 'google' | 'facebook' | 'login'
+  ) => Promise<void>
 }
 
 export const useAuth = create<UseAuthType>()(
@@ -25,19 +28,25 @@ export const useAuth = create<UseAuthType>()(
         isLoggedIn: false,
         userInfo: {} as UserInfo,
         SignOut: () => set(() => ({ isLoggedIn: false, userInfo: {} as UserInfo })),
-        getAccessToken: async (credential) => {
+        getAccessToken: async (credential, type) => {
           set(() => ({ isLoading: true }))
-          const { status, data } = await Api.post('/auth/google', { credential })
+          
+          try {
+            const { status, data } = await Api.post(`/auth/${type}`, { credential })
 
-          if (status === 201) {
-            const { accessToken, userInfo } = data
-            set(() => ({ 
-              isLoggedIn: true,  
-              userInfo: { ...userInfo, token: accessToken } 
-            }))
+            if (status === 201) {
+              const { accessToken, userInfo } = data
+              set(() => ({ 
+                isLoggedIn: true,  
+                userInfo: { ...userInfo, token: accessToken } 
+              }))
+            }
+
+            set(() => ({ isLoading: false }))
+          } catch (err: any) {
+            console.log(err.message)
+            set(() => ({ isLoading: false }))
           }
-
-          set(() => ({ isLoading: false }))
         }
       }),
       {

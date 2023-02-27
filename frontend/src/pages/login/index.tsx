@@ -1,16 +1,14 @@
-import { SignInGoogle } from "../../components/login/google"
-import { Signin } from "../../components/login/signin"
 import { useAuth } from "../../hooks/auth"
 import { UserStats } from "../../components/indicator/user-stats"
-import { NetworkButton } from "../../components/login/section-networks"
+import { Login } from "../../components/login"
 
-export default function Login() {
+export default function LoginPage() {
   const { isLoggedIn } = useAuth()
 
   return (
     <div className="h-[42.3rem] flex flex-col justify-start items-center">
       { isLoggedIn && (<UserStats />) }      
-      { !isLoggedIn && (<NetworkButton />)}
+      { !isLoggedIn && (<Login />)}
     </div>
   )
 }

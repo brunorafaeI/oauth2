@@ -1,8 +1,11 @@
+import { useState } from "react"
+
 import { useGoogleLogin } from "@react-oauth/google"
 import { useAuth } from "../../hooks/auth"
 
 export function SignInGoogle() {
-  const { isLoading, isLoggedIn, getAccessToken, SignOut } = useAuth()
+  const [isClicked, setIsClicked] = useState(false)
+  const {isLoading, getAccessToken} = useAuth()
 
   const SignInWithGoogle = useGoogleLogin({
     flow: 'auth-code',
@@ -10,7 +13,7 @@ export function SignInGoogle() {
       const { code } = response
 
       if (code) {
-        getAccessToken(code)
+        getAccessToken(code, 'google')
       }
     },
     onError: () => console.log('Login Failed'),
@@ -18,10 +21,13 @@ export function SignInGoogle() {
   
   return (
     <>
-      <button className={`btn btn-primary ${(isLoading ? " loading" : "")}`}
-        onClick={() => isLoggedIn ? SignOut() : SignInWithGoogle()}
+      <button className={`btn btn-primary ${(isLoading && isClicked ? " loading" : "")}`}
+        onClick={() => {
+          SignInWithGoogle()
+          setIsClicked(true)
+        }}
       >
-        { isLoggedIn ? ("Sign out") : ("Google") }
+        Google
       </button>
     </>
   )

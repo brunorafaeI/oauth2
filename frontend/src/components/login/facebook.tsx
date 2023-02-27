@@ -1,27 +1,20 @@
-import { useGoogleLogin } from "@react-oauth/google"
+import { useState } from "react"
+
 import { useAuth } from "../../hooks/auth"
 
 export function SignInFacebook() {
-  const { isLoading, isLoggedIn, getAccessToken, SignOut } = useAuth()
-
-  const SignInWithGoogle = useGoogleLogin({
-    flow: 'auth-code',
-    onSuccess: response => {
-      const { code } = response
-
-      if (code) {
-        getAccessToken(code)
-      }
-    },
-    onError: () => console.log('Login Failed'),
-  })
+  const [isClicked, setIsClicked] = useState(false)
+  const {isLoading} = useAuth()
   
   return (
     <>
-      <button className={`btn btn-primary ${(isLoading ? " loading" : "")}`}
-        onClick={() => isLoggedIn ? SignOut() : SignInWithGoogle()}
+      <button className={`btn btn-primary ${(isLoading && isClicked ? " loading" : "")}`}
+        onClick={() => {
+          alert("Facebook login")
+          setIsClicked(true)
+        }}
       >
-        { isLoggedIn ? ("Sign out") : ("Facebook")}
+        Facebook
       </button>
     </>
   )
