@@ -8,12 +8,12 @@ datasource db {
 }
 
 model Users {
-  id        String    @id @default(uuid())
-  name      String?   @db.VarChar(80)
-  email     String    @unique @db.VarChar(80)
-  picture   String?   @db.VarChar(300)
-  token     String    @db.VarChar(1200)
-  status    String?   @default("1") @db.Bit(1)
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
+  id         String    @id @default(uuid())
+  name       String?   @db.VarChar(80)
+  email      String    @unique @db.VarChar(80)
+  picture    String?   @db.VarChar(300)
+  token      String    @db.VarChar(1200)
+  status     String?   @default("1") @db.Bit(1)
+  created_at DateTime? @default(now())
+  updated_at DateTime? @updatedAt
 }

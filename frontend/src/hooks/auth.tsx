@@ -32,11 +32,12 @@ export const useAuth = create<UseAuthType>()(
           if (status === 201) {
             const { accessToken, userInfo } = data
             set(() => ({ 
-              isLoading: false, 
               isLoggedIn: true,  
               userInfo: { ...userInfo, token: accessToken } 
             }))
           }
+
+          set(() => ({ isLoading: false }))
         }
       }),
       {

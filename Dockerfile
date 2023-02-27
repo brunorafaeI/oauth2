@@ -9,4 +9,5 @@ ENV NODE_TLS_REJECT_UNAUTHORIZED=0
 RUN npm config set strict-ssl false \
     && yarn config set strict-ssl false \
     && yarn global add pm2 \
-    && yarn global add typescript
+    && yarn global add typescript \
+    && npm i -g npm@latest
