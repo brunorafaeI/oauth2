@@ -29,6 +29,7 @@ services:
   frontend:
     build: ./
     container_name: oauth_frontend
+    restart: always
     volumes:
         - ./frontend:/app
     ports:

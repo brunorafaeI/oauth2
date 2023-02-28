@@ -14,10 +14,10 @@ export function Signin() {
   const handleSubmitForm = useCallback( async (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault()
     const formLogin = form.target as HTMLFormElement
-    const { elements } = formLogin
+    const {elements} = formLogin
 
     if (elements.length) {
-      const { name, email } = elements as FormLoginElement
+      const {name, email} = elements as FormLoginElement
 
       if (name.value && email.value) {
         const credential = { name: name.value, email: email.value }
@@ -54,7 +54,7 @@ export function Signin() {
             setIsClicked(true)
           }}
         >
-            Send
+            Log in
         </button>
       </form>
     </>

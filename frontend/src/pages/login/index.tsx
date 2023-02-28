@@ -6,7 +6,7 @@ export default function LoginPage() {
   const { isLoggedIn } = useAuth()
 
   return (
-    <div className="h-[42.3rem] flex flex-col justify-start items-center">
+    <div className="h-screen flex flex-col justify-start items-center">
       { isLoggedIn && (<UserStats />) }      
       { !isLoggedIn && (<Login />)}
     </div>
