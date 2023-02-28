@@ -14,6 +14,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "baseUrl": "./src",                      
+    "paths": {
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@pages/*": ["pages/*"],
+      "@middlewares/*": ["middlewares/*"],
+    },
     "jsx": "react-jsx"
   },
   "include": ["src"],
