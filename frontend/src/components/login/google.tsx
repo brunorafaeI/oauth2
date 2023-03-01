@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import { useGoogleLogin } from "@react-oauth/google"
 import { useAuth } from "../../hooks/auth"
-import IconGoogle from '../../../public/icons/google.svg'
+import IconGoogle from '../../icons/google.svg'
 
 export function SignInGoogle() {
   const [isClicked, setIsClicked] = useState(false)

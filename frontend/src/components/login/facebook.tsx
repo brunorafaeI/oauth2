@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import IconFacebook from '../../../public/icons/facebook.svg'
+import IconFacebook from '../../icons/facebook.svg'
 import { useAuth } from "../../hooks/auth"
 
 export function SignInFacebook() {
