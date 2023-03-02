@@ -4,8 +4,8 @@ import IconFacebook from '../../icons/facebook.svg'
 import { useAuth } from "../../hooks/auth"
 
 export function SignInFacebook() {
-  const [isClicked, setIsClicked] = useState(false)
-  const {isLoading} = useAuth()
+  const [ isClicked, setIsClicked ] = useState(false)
+  const { isLoading } = useAuth()
   
   return (
     <>

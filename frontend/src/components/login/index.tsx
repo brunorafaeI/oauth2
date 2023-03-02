@@ -1,6 +1,6 @@
-import { Signin } from "./signin"
-import { SignInGoogle } from "./google"
-import { SignInFacebook } from "./facebook"
+import { Signin } from "@components/login/signin"
+import { SignInGoogle } from "@components/login/google"
+import { SignInFacebook } from "@components/login/facebook"
 
 export function Login() {
   return (

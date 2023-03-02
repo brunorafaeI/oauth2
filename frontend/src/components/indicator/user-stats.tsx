@@ -1,7 +1,7 @@
-import { useAuth } from "../../hooks/auth"
+import { useAuth } from "@hooks/auth"
 
 export function UserStats() {
-  const { userInfo } = useAuth()
+  const {userInfo} = useAuth()
 
   return (
     <>
@@ -27,10 +27,18 @@ export function UserStats() {
         
         <div className="stat">
           <div className="stat-figure text-secondary">
-            <div className="avatar online">
-              <div className="w-16 rounded-full">
-                <img src={userInfo.picture} alt={userInfo.name} />
-              </div>
+            <div className={`avatar ${!userInfo.picture && "placeholder"} online`}>
+              { userInfo.picture ? (
+                <div className="w-16 rounded-full">
+                  <img src={userInfo.picture} alt={userInfo.name} />
+                </div>
+              ) : (
+                <div className="bg-neutral-focus text-neutral-content rounded-full w-24">
+                  <span className="text-3xl font-bold">
+                    {userInfo.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
           <div className="stat-value">86%</div>

@@ -1,6 +1,6 @@
-import { FormEvent, useCallback, useState } from "react"
+import { FormEvent, useState } from "react"
 
-import { useAuth } from "../../hooks/auth"
+import { useAuth } from "@hooks/auth"
 
 interface FormLoginElement extends HTMLFormControlsCollection {
   name: HTMLInputElement
@@ -8,30 +8,26 @@ interface FormLoginElement extends HTMLFormControlsCollection {
 }
 
 export function Signin() {
-  const [isClicked, setIsClicked] = useState(false)
-  const {isLoading, getAccessToken} = useAuth()
+  const [ isClicked, setIsClicked ] = useState(false)
+  const { isLoading, getAccessToken } = useAuth()
 
-  const handleSubmitForm = useCallback( async (form: FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = async (form: FormEvent<HTMLFormElement>) => {
     form.preventDefault()
     const formLogin = form.target as HTMLFormElement
-    const {elements} = formLogin
+    const { elements } = formLogin
 
     if (elements.length) {
-      const {name, email} = elements as FormLoginElement
+      const { name, email } = elements as FormLoginElement
 
       if (name.value && email.value) {
         const credential = { name: name.value, email: email.value }
 
-        getAccessToken(
-          credential,
-          'login'
-        )
-
+        getAccessToken(credential, 'login')
         formLogin.reset()
       }
     }
 
-  }, [])
+  }
 
   return (
     <>
@@ -50,9 +46,7 @@ export function Signin() {
         <button
           type="submit" 
           className={`btn btn-secondary w-full mb-4 ${(isLoading && isClicked ? "loading" : "")}`}
-          onClick={() => {
-            setIsClicked(true)
-          }}
+          onClick={() => setIsClicked(true) }
         >
             Log in
         </button>

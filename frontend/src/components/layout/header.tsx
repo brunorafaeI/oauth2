@@ -1,4 +1,4 @@
-import { NavBar } from "../header/navbar"
+import { NavBar } from "@components/header/navbar"
 
 export function Header() {
   return(

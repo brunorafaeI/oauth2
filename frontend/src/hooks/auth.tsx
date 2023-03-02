@@ -35,11 +35,11 @@ export const useAuth = create<UseAuthType>()(
             const { status, data } = await Api.post(`/auth/${type}`, { credential })
 
             if (status === 201) {
-              const { accessToken, userInfo } = data
-              set(() => ({ 
-                isLoggedIn: true,  
-                userInfo: { ...userInfo, token: accessToken } 
-              }))
+              const { userInfo } = data
+              
+              if (userInfo) {
+                set(() => ({ isLoggedIn: true, userInfo: userInfo }))
+              }
             }
 
             set(() => ({ isLoading: false }))

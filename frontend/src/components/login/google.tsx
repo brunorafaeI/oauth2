@@ -5,8 +5,8 @@ import { useAuth } from "../../hooks/auth"
 import IconGoogle from '../../icons/google.svg'
 
 export function SignInGoogle() {
-  const [isClicked, setIsClicked] = useState(false)
-  const {isLoading, getAccessToken} = useAuth()
+  const [ isClicked, setIsClicked ] = useState(false)
+  const { isLoading, getAccessToken } = useAuth()
 
   const SignInWithGoogle = useGoogleLogin({
     flow: 'auth-code',

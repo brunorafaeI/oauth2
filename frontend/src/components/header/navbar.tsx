@@ -1,6 +1,6 @@
-import { useAuth } from "../../hooks/auth";
-import { TopLeft } from "./top-left";
-import { TopRight } from "./top-right";
+import { useAuth } from "@hooks/auth";
+import { TopLeft } from "@components/header/top-left";
+import { TopRight } from "@components/header/top-right";
 
 export function NavBar() {
   const { isLoggedIn } = useAuth()
