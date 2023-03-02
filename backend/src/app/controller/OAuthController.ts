@@ -1,3 +1,4 @@
+import { UserDTO } from '@infra/database/dtos/UserDTO';
 import { Request, Response } from "express"
 
 import { IRepositoryService } from '@app/services/contracts/IRepositoryService'
@@ -10,7 +11,7 @@ import { Users } from "@prisma/client"
 
 interface OAuthRequestBody extends Request {
   body: {
-    credential: string
+    credential: string | UserDTO
   }
 }
 export class OAuthController extends Controller {
@@ -25,6 +26,7 @@ export class OAuthController extends Controller {
     this._jwtTokenService = new JwtTokenService() 
     
     this.router.post("/google", this.OAuthGoogle)
+    this.router.post("/login", this.OAuthApp)
   }
 
   private OAuthGoogle = async (
@@ -38,6 +40,22 @@ export class OAuthController extends Controller {
       const jwtToken = this._jwtTokenService.generateToken(userInfo)
       const userSaved = await this._userService.save({ ...userInfo, token: jwtToken })
       
+      return res.status(201).json({ userInfo: userSaved })
+    } catch (err: any) {
+      AppThrowException(err, res)
+    } 
+  }
+
+  private OAuthApp = async (
+    req: Request<OAuthRequestBody>,
+    res: Response,
+  ): Promise<Response|void> => {
+    const { credential } = req.body
+
+    try {
+      const jwtToken = this._jwtTokenService.generateToken(credential)
+      const userSaved = await this._userService.save({ ...credential, token: jwtToken })
+
       return res.status(201).json({ userInfo: userSaved })
     } catch (err: any) {
       AppThrowException(err, res)
