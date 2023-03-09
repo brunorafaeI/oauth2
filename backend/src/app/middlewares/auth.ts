@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 
-import { AppError } from '@infra/config/error'
+import { AppError } from '@app/middlewares/error'
 import { JwtTokenService } from '@app/services/auth/JwtTokenService'
 
 const jwtTokenService = new JwtTokenService()
@@ -12,7 +12,7 @@ export default function AuthMiddleware(
 ) {
   const { authorization } = req.headers
 
-  if (!authorization) {
+  if (!authorization || !authorization.includes('Bearer')) {
     throw new AppError('Invalid authorization', 401)
   }
 

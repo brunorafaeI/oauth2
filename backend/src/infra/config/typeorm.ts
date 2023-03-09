@@ -4,7 +4,7 @@ import path from "node:path"
 import { DataSource } from "typeorm"
 
 import env from "@infra/config/env"
-import { AppError } from "@infra/config/error"
+import { AppError } from "@app/middlewares/error"
 
 const IS_NOT_PROD = process.env.NODE_ENV !== "production"
 

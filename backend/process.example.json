@@ -1,11 +1,11 @@
 {
-  "name"        : "oauth_backend",
-  "script"      : "./build/server.js",
+  "name"        : "",
+  "script"      : "",
   "watch"       : true,
-  "ignore"      : ["./node_modules"],
-  "node_args"   : "-r tsconfig-paths/register",
+  "ignore"      : [],
+  "node_args"   : "",
   "env"         : {
-    "NODE_OPTIONS": "--max-old-space-size=2048",
-    "TS_NODE_BASEURL": "./build"
+    "NODE_OPTIONS": "",
+    "TS_NODE_BASEURL": ""
   }
 }

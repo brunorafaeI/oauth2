@@ -16,4 +16,6 @@ model Users {
   status     String?   @default("1") @db.Bit(1)
   created_at DateTime? @default(now())
   updated_at DateTime? @updatedAt
+  
+  @@map("users")
 }

@@ -1,6 +1,7 @@
 import jwt, { JwtPayload } from "jsonwebtoken"
 
 import { UserDTO } from "@infra/database/dtos/UserDTO"
+import { AppError } from "@app/middlewares/error"
 
 export class JwtTokenService {
   private _secretKey: string
@@ -12,15 +13,16 @@ export class JwtTokenService {
   }
 
   public generateToken(user: UserDTO): string {
+    const { name, email } = user
+
+    if (!email || email.length < 6) {
+      throw new AppError("Invalid credentials, please try again!")
+    }
+
     const jwtToken = jwt.sign(
-      {
-        userName: user.name,
-        userEmail: user.email
-      },
+      { name, email },
       this._secretKey,
-      {
-        expiresIn: this._expiresToken,
-      },
+      { expiresIn: this._expiresToken },
     )
 
     return jwtToken

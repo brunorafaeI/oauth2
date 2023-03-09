@@ -1,6 +1,6 @@
 import { OAuth2Client, TokenPayload } from "google-auth-library"
 
-import { AppError } from '@infra/config/error'
+import { AppError } from '@app/middlewares/error'
 import { UserDTO } from "@infra/database/dtos/UserDTO"
 import env from "@infra/config/env"
 

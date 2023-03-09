@@ -3,6 +3,6 @@ import { Router } from "express"
 
 const router = Router()
 
-router.use("/auth", new OAuthController().router)
+router.use("/auth", new OAuthController().getRoutes())
 
 export default router
