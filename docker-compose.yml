@@ -3,47 +3,50 @@ services:
 
   builder:
     container_name: oauth_builder
+    build: 
+      context: ./
+      target: oauth_builder
     restart: always
-    build: ./
     volumes:
-        - ./backend:/app
+        - ./backend:/usr/src/app
     networks:
-        - oauth
-    command: sh -c "npm i && npm run dev"
+        - network
+    command: sh -c "npm run dev"
 
   backend:
     container_name: oauth_backend
     restart: always
-    build: ./
+    build: 
+      context: ./
+      target: oauth_backend
     depends_on: 
       - builder
     ports:
         - 3345:3333
     volumes:
-        - ./backend:/app
-        - ./docker/tmp/logs/:/usr/src/app/error.log
+        - ./backend:/usr/src/app
     networks:
-        - oauth
-    command: ["pm2-runtime", "process.json"]
+        - network
 
   frontend:
-    build: ./
     container_name: oauth_frontend
+    build: 
+      context: ./
+      target: oauth_frontend
     restart: always
     volumes:
-        - ./frontend:/app
+        - ./frontend:/usr/src/app
     ports:
       - 3000:3333
     networks:
-      - oauth
-    command: sh -c "npm i && npm run dev"
+      - network
 
   postgres:
     image: postgres
     container_name: oauth_pgsql
     restart: always
     volumes:
-      - oauth_data:/var/lib/postgresql/data:rw
+      - pgsql_data:/var/lib/postgresql/data:rw
     environment:
       - POSTGRES_PASSWORD=oauth
       - POSTGRES_USER=oauth
@@ -51,10 +54,10 @@ services:
     ports:
       - 5432:5432
     networks:
-      - oauth
+      - network
 
 volumes:
-  oauth_data:
+  pgsql_data:
 
 networks:
-  oauth:
+  network:
