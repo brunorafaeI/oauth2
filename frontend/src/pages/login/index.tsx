@@ -7,8 +7,8 @@ export default function LoginPage() {
 
   return (
     <div className="h-screen flex flex-col justify-start items-center">
-      { isLoggedIn && (<UserStats />) }      
-      { !isLoggedIn && (<Login />)}
+      { isLoggedIn && <UserStats /> }      
+      { !isLoggedIn && <Login /> }
     </div>
   )
 }

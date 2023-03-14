@@ -11,9 +11,9 @@ export function Signin() {
   const [ isClicked, setIsClicked ] = useState(false)
   const { isLoading, getAccessToken } = useAuth()
 
-  const handleSubmitForm = async (form: FormEvent<HTMLFormElement>) => {
-    form.preventDefault()
-    const formLogin = form.target as HTMLFormElement
+  const handleSubmitForm = async (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault()
+    const formLogin = evt.target as HTMLFormElement
     const { elements } = formLogin
 
     if (elements.length) {
@@ -45,7 +45,7 @@ export function Signin() {
 
         <button
           type="submit" 
-          className={`btn btn-secondary w-full mb-4 ${(isLoading && isClicked ? "loading" : "")}`}
+          className={`btn btn-secondary w-full mb-4 ${isLoading && isClicked ? "loading" : ""}`}
           onClick={() => setIsClicked(true) }
         >
             Log in

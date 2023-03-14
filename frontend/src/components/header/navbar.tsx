@@ -8,11 +8,11 @@ export function NavBar() {
   return(
     <>
       <div className="navbar bg-base-100 flex justify-center shadow-xl">
-        { isLoggedIn && (<TopRight />)}
+        { isLoggedIn && <TopRight /> }
         <div className="navbar-center">
           <a className="normal-case text-xl cursor-pointer font-bold">OAuth</a>
         </div>
-        { isLoggedIn && (<TopLeft />) }
+        { isLoggedIn && <TopLeft /> }
       </div>
     </>
   )

@@ -9,7 +9,7 @@ export function SignInFacebook() {
   
   return (
     <>
-      <button className={`btn btn-primary btn-outline border-0 lowercase ${(isLoading && isClicked ? " loading" : "")}`}
+      <button className={`btn btn-primary btn-outline border-0 lowercase ${isLoading && isClicked ? " loading" : ""}`}
         onClick={() => {
           alert("Facebook login")
           setIsClicked(true)
