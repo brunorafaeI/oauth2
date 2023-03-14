@@ -10,20 +10,14 @@ export class UserPrismaService implements IRepository<Users> {
     this._userRepository = prisma.users
   }
 
-  async findAll(): Promise<Users[]> {
-    return await this._userRepository.findMany()
-  }
-
   async findById(id: string): Promise<Users | null> {
     return await this._userRepository.findUnique({
       where: { id }
     })
   }
 
-  async find(criteria: any): Promise<Users[] | null> {
-    return await this._userRepository.findMany({
-      where: criteria
-    })
+  async find(criteria: Prisma.UsersFindManyArgs): Promise<Users[] | null> {
+    return await this._userRepository.findMany(criteria)
   }
 
   async save(user: UserDTO): Promise<Users | void> {
@@ -33,9 +27,7 @@ export class UserPrismaService implements IRepository<Users> {
 
     if (userFind) {
       return await this._userRepository.update({
-        where: {
-          email: user.email
-        },
+        where: { email: user.email },
         data: user
       })
     }

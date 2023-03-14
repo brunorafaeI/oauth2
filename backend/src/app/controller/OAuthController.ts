@@ -17,7 +17,6 @@ export class OAuthController extends BaseController {
   private readonly _oAuth2ClientService: OAuth2ClientService
   private readonly _jwtTokenService: JwtTokenService
   private readonly _userService: IRepository<Users>
-  private readonly _router: Router = Router()
 
   constructor() {
     super()

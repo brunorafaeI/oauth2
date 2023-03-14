@@ -12,15 +12,11 @@ export class UserTypeormService implements IRepository<Users> {
     this._userRepository = dataSource.getRepository(Users)
   }
 
-  async findAll(): Promise<Users[]> {
-    return await this._userRepository.find()
-  }
-
   async findById(id: string): Promise<Users | null> {
     return await this._userRepository.findOneBy({ id })
   }
 
-  async find(criteria: FindManyOptions): Promise<Users[] | null> {
+  async find(criteria: FindManyOptions<Users>): Promise<Users[] | null> {
     return await this._userRepository.find(criteria)
   }
 
