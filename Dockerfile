@@ -13,34 +13,26 @@ RUN npm i -g npm@latest
 
 ## Install packages
 RUN npm i -g pm2 typescript \
-    && npm i --save
+    && npm ci --silent
 
 RUN chown -R node:node ./node_modules
 
 USER node
 
-FROM node:lts-alpine3.17 AS oauth_frontend
+FROM oauth_builder AS oauth_frontend
 
-WORKDIR /usr/src/app
+RUN rm -rf node_modules/*
 
 COPY ./frontend/package.json ./frontend/package-lock.json ./
 
-## SSL Certificate
-COPY ./docker/certs /usr/local/share/ca-certificates/
-ENV NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/CACERT.pem
-
-## Update npm to latest version
-RUN npm i -g npm@latest
-
 ## Install packages
-RUN npm i -g pm2 typescript \
-    && npm i --save
+RUN npm ci --silent
 
 RUN chown -R node:node ./node_modules
 
 USER node
 
-ENTRYPOINT [ -d "node_modules" ] && sh -c "npm run dev" || npm i --save && sh -c "npm run dev"
+ENTRYPOINT [ -d "node_modules" ] && sh -c "npm run dev" || npm ci --silent && sh -c "npm run dev"
 
 FROM oauth_builder AS oauth_backend
 
